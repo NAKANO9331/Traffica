@@ -1,0 +1,33 @@
+name: traffica
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - numpy
+  - pandas
+  - scikit-learn
+  - scipy
+  - matplotlib
+  - seaborn
+  - tqdm
+  - h5py
+  - statsmodels
+  - joblib
+  - graphviz
+  - pydot
+  - holidays
+  - pip
+  - pip:
+      - pydeck
+      - streamlit
+      - protobuf==3.20.3
+      - tensorflow==2.12.0
+      - torch
+      - xgboost
+      - lightgbm
+      - plotly
+      - python-dateutil
+      - requests
+      - rich
+      - shap
