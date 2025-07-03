@@ -42,11 +42,6 @@ Traffica is a deep learning-based traffic flow forecasting system that integrate
 ![Model Performance Metrics](results/figures/comparison/performance_metrics.png)
 *Comparison of key metrics (RMSE, MAE, R²) for baseline and weather-enhanced models.*
 
-### Performance Table
-
-![Performance Table](results/figures/comparison/performance_table.png)
-*Tabular summary of model performance across different metrics and configurations.*
-
 ### Traffic Map Visualization
 
 ![Traffic Map Visualization](results/figures/Visualization/traffic_map.png)
