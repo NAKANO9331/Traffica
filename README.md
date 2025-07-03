@@ -25,9 +25,11 @@ Traffica is a deep learning-based traffic flow forecasting system that integrate
      `conda env create -f environment.yml && conda activate traffica`
    - Or pip:  
      `pip install -r requirements.txt`
-2. **Run Experiments**
+2. **Token Setup**
+   - Some features (such as map visualization or weather data) require you to provide your own API token. Please fill in your token in `streamlit_map.py` as instructed in the code comments.
+3. **Run Experiments**
    - `python launch.py`
-3. **Interactive Visualization**
+4. **Interactive Visualization**
    - `streamlit run streamlit_map.py`  
      Open http://localhost:8501 in your browser.
 
