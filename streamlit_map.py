@@ -9,7 +9,7 @@ FLOWPATH = 'data/completed/traffic_result.h5'
 adj_mat_path = 'data/raw/traffic/adj_mx.pkl'
 graph_sensor_loc_path = 'data/raw/traffic/graph_sensor_locations.csv'
 
-TOKEN = "pk.eyJ1Ijoic2FrdTJyYSIsImEiOiJjbWNneHJ6dmIwb3Z2MmxvdHBjOGRzODdlIn0.6mv3xDpjiKsjVGrqbQoZXQ"
+TOKEN = "YOUR_MAPBOX_TOKEN"
 
 @st.cache_data(show_spinner=False)
 def load_data():
