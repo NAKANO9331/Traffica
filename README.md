@@ -95,7 +95,7 @@ Traffica/
 
 ## Acknowledgements
 
-We would like to thank the authors and contributors of the models and datasets utilized in this project. Their work has been fundamental to the development and success of Traffica.
+I would like to thank the authors and contributors of the models and datasets utilized in this project. Their work has been fundamental to the development and success of Traffica.
 
 ---
 
