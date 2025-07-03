@@ -86,5 +86,17 @@ Traffica/
 - See `requirements.txt` or `environment.yml` for all dependencies (TensorFlow, PyTorch, scikit-learn, pandas, numpy, matplotlib, seaborn, pydeck, streamlit, etc.)
 - GPU recommended for training
 
+---
+
+## Acknowledgements
+
+We would like to thank the authors and contributors of the models and datasets utilized in this project. Their work has been fundamental to the development and success of Traffica.
+
+## Contact
+
+For questions, suggestions, or collaboration opportunities, please contact us via:
+Email: nakano9331@Gmail.com
+
+
 
 
