@@ -385,82 +385,6 @@ def analyze_weather_features(df, weather_features, target="avg_speed"):
     close_plt()
 
 
-def create_eda_visualizations(traffic_data, weather_data, results_dir):
-    """Create data exploration analysis visualizations"""
-    plt.style.use("seaborn")
-    ensure_dir(os.path.join(results_dir, "figures"))
-
-    # 1. Traffic flow time series plot
-    plt.figure(figsize=(15, 6))
-    daily_traffic = traffic_data.mean(axis=1).resample("D").mean()
-    plt.plot(daily_traffic.index, daily_traffic.values)
-    plt.title("Daily Traffic Flow Pattern", fontsize=14)
-    plt.xlabel("Date", fontsize=12)
-    plt.ylabel("Average Traffic Flow", fontsize=12)
-    plt.grid(True)
-    save_path = os.path.join(results_dir, "figures/traffic_pattern.png")
-    save_figure(save_path, dpi=300, bbox_inches="tight")
-    close_plt()
-
-    # 2. Correlation heatmap
-    plt.figure(figsize=(12, 8))
-    combined_data = pd.concat(
-        [traffic_data.mean(axis=1).to_frame("traffic_flow"), weather_data], axis=1
-    )
-    sns.heatmap(combined_data.corr(), annot=True, cmap="RdBu_r", center=0)
-    plt.title("Weather-Traffic Correlation Heatmap", fontsize=14)
-    save_path = os.path.join(results_dir, "figures/correlation_heatmap.png")
-    save_figure(save_path, dpi=300, bbox_inches="tight")
-    close_plt()
-
-    # 3. Weather variable distribution plot
-    weather_features = weather_data.columns[
-        :3
-    ]  # Select the first three weather features
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-    for i, feature in enumerate(weather_features):
-        sns.histplot(weather_data[feature], ax=axes[i], kde=True)
-        axes[i].set_title(f"{feature.capitalize()} Distribution", fontsize=12)
-    plt.tight_layout()
-    save_path = os.path.join(results_dir, "figures/weather_distributions.png")
-    save_figure(save_path, dpi=300, bbox_inches="tight")
-    close_plt()
-
-
-def plot_model_comparison_radar(baseline_results, enhanced_results, results_dir):
-    """Create a radar chart for model performance comparison"""
-    metrics = ["rmse", "mae", "r2", "mape"]
-    models = ["LSTM", "GRU", "TCN"]
-
-    angles = np.linspace(0, 2 * np.pi, len(metrics), endpoint=False)
-
-    fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(projection="polar"))
-
-    for model in models:
-        values = []
-        for metric in metrics:
-            baseline = baseline_results[model][metric]
-            enhanced = enhanced_results[model][metric]
-            # For r2, a larger value is better; for other metrics, a smaller value is better
-            ratio = enhanced / baseline if metric != "r2" else baseline / enhanced
-            values.append(ratio)
-
-        values = np.concatenate((values, [values[0]]))
-        angles_plot = np.concatenate((angles, [angles[0]]))
-
-        ax.plot(angles_plot, values, "-o", linewidth=2, label=model)
-        ax.fill(angles_plot, values, alpha=0.25)
-
-    ax.set_xticks(angles)
-    ax.set_xticklabels(metrics)
-    ax.set_title("Model Performance Comparison\n(Enhanced/Baseline)", fontsize=14)
-    plt.legend(loc="upper right", fontsize=10)
-
-    save_path = os.path.join(results_dir, "figures/model_comparison_radar.png")
-    save_figure(save_path, dpi=300, bbox_inches="tight")
-    close_plt()
-
-
 def plot_prediction_comparison(
     y_true, y_pred_baseline, y_pred_enhanced, model_name, results_dir
 ):
@@ -506,48 +430,6 @@ def plot_feature_importance(model, feature_names, results_dir):
     plt.tight_layout()
 
     save_path = os.path.join(results_dir, "figures", "feature_importance.png")
-    save_figure(save_path, dpi=300, bbox_inches="tight")
-    close_plt()
-
-
-def plot_seasonal_analysis(traffic_data, weather_data, results_dir):
-    """Plot the seasonal analysis chart of traffic flow"""
-    # Ensure the directory exists
-    figures_dir = os.path.join(results_dir, "figures")
-    ensure_dir(figures_dir)
-
-    plt.figure(figsize=(15, 10))
-
-    # Hourly analysis
-    plt.subplot(2, 1, 1)
-    hourly_pattern = traffic_data.groupby(traffic_data.index.hour).mean()
-    plt.plot(hourly_pattern.index, hourly_pattern.values, marker="o")
-    plt.title("Average Traffic Flow by Hour", fontsize=14)
-    plt.xlabel("Hour of Day", fontsize=12)
-    plt.ylabel("Average Traffic Flow", fontsize=12)
-    plt.grid(True)
-
-    # Weekly analysis
-    plt.subplot(2, 1, 2)
-    weekly_pattern = traffic_data.groupby(traffic_data.index.dayofweek).mean()
-    days = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-    ]
-    plt.plot(weekly_pattern.index, weekly_pattern.values, marker="o")
-    plt.xticks(range(7), days, rotation=45)
-    plt.title("Average Traffic Flow by Day of Week", fontsize=14)
-    plt.xlabel("Day of Week", fontsize=12)
-    plt.ylabel("Average Traffic Flow", fontsize=12)
-    plt.grid(True)
-
-    plt.tight_layout()
-    save_path = os.path.join(figures_dir, "seasonal_analysis.png")
     save_figure(save_path, dpi=300, bbox_inches="tight")
     close_plt()
 
@@ -703,9 +585,7 @@ class DataVisualizer:
         plt.close()
 
     def plot_weather_analysis(self, weather_data, save_path):
-        plt.figure(figsize=(15, 10))
-
-        plt.subplot(2, 1, 1)
+        plt.figure(figsize=(12, 6))
         plt.plot(weather_data.index, weather_data["TMAX"], label="Max Temperature")
         plt.plot(weather_data.index, weather_data["TMIN"], label="Min Temperature")
         plt.title("Temperature Variation Over Time", fontsize=14)
@@ -713,38 +593,22 @@ class DataVisualizer:
         plt.ylabel("Temperature (°C)")
         plt.legend()
         plt.grid(True)
-        plt.subplot(2, 1, 2)
+        plt.tight_layout()
+        filename_temp = "weather_temperature.png"
+        folder = self.subdirs["weather"]
+        save_figure(os.path.join(folder, filename_temp), dpi=300, bbox_inches="tight")
+        plt.close()
+
+        plt.figure(figsize=(12, 6))
         humidity_bins = pd.qcut(weather_data["RHAV"], q=10)
-        avg_precip = weather_data.groupby(humidity_bins)["PRCP"].agg(
-            ["mean", "std", "count"]
-        )
-        x = np.arange(len(avg_precip))
-        plt.bar(
-            x,
-            avg_precip["mean"],
-            yerr=avg_precip["std"],
-            capsize=5,
-            alpha=0.6,
-            color=COLORS["bar"],
-            label="Average Precipitation",
-        )
-
-        z = np.polyfit(x, avg_precip["mean"], 1)
-        p = np.poly1d(z)
-        plt.plot(x, p(x), "r--", alpha=0.8, label="Trend Line")
-
-        plt.xticks(
-            x,
-            [f"{int(bin.left)}-{int(bin.right)}" for bin in avg_precip.index],
-            rotation=45,
-        )
-
-        plt.title("Average Precipitation by Humidity Range", fontsize=14)
+        weather_data["humidity_bin"] = humidity_bins
+        # Boxplot showing precipitation distribution for each humidity range
+        sns.boxplot(x="humidity_bin", y="PRCP", data=weather_data)
+        plt.title("Precipitation Distribution by Humidity Range", fontsize=14)
         plt.xlabel("Relative Humidity Range (%)")
-        plt.ylabel("Average Precipitation (mm)")
-        plt.legend()
+        plt.ylabel("Precipitation (mm)")
+        plt.xticks(rotation=45)
         plt.grid(True, alpha=0.3)
-
         corr = weather_data["PRCP"].corr(weather_data["RHAV"])
         plt.text(
             0.02,
@@ -754,11 +618,10 @@ class DataVisualizer:
             bbox=COLORS["bbox_white"],
             verticalalignment="top",
         )
-
         plt.tight_layout()
-        filename = "weather_patterns.png"
+        filename_precip = "weather_precipitation_by_humidity.png"
         folder = self.subdirs["weather"]
-        save_figure(os.path.join(folder, filename), dpi=300, bbox_inches="tight")
+        save_figure(os.path.join(folder, filename_precip), dpi=300, bbox_inches="tight")
         plt.close()
 
     def plot_prediction_comparison(self, y_true, predictions_dict, save_path=None):
@@ -784,7 +647,6 @@ class DataVisualizer:
         plt.close()
 
     def plot_model_improvements(self, baseline_metrics, enhanced_metrics, save_path):
-        """Plot model improvement comparison (已禁用 performance_heatmap.png 生成)"""
         pass
 
     def plot_prediction_vs_actual(
@@ -975,12 +837,12 @@ class DataVisualizer:
         """Analyze the relationship between traffic flow and weather"""
         ensure_dir(save_path)
         avg_traffic = traffic_data.mean(axis=1)
-        # 1. Boxplot of traffic flow in different temperature ranges
+        # 1. Violin plot of traffic flow in different temperature ranges
         plt.figure(figsize=(12, 8))
         temp_bins = pd.cut(
             weather_data["TMAX"], bins=5, labels=[f"{i+1}" for i in range(5)]
         )
-        sns.boxplot(x=temp_bins, y=avg_traffic)
+        sns.violinplot(x=temp_bins, y=avg_traffic)
         plt.title("Traffic Flow Distribution by Temperature Range")
         plt.xlabel("Temperature Level (1: Coldest, 5: Hottest)")
         plt.ylabel("Traffic Flow")
@@ -989,14 +851,14 @@ class DataVisualizer:
         folder = self.subdirs["traffic"]
         save_figure(os.path.join(folder, filename), dpi=300)
         plt.close()
-        # 2. Traffic flow changes in different precipitation levels
+        # 2. Violin plot of traffic flow changes in different precipitation levels
         plt.figure(figsize=(12, 8))
         weather_data["rain_category"] = pd.cut(
             weather_data["PRCP"],
             bins=[-np.inf, 0, 0.1, 1, np.inf],
             labels=["No Rain", "Light", "Moderate", "Heavy"],
         )
-        sns.boxplot(
+        sns.violinplot(
             x="rain_category",
             y=avg_traffic,
             data=pd.DataFrame(
@@ -1112,18 +974,15 @@ class DataVisualizer:
                 alpha=0.8,
             )
 
-            # Add value labels
             add_value_labels(ax, bars1)
             add_value_labels(ax, bars2)
 
-            # Set chart properties
             ax.set_title(metric_info["title"], fontsize=12, pad=10)
             ax.set_xticks(index)
             ax.set_xticklabels(models, rotation=45)
             ax.legend(loc="upper right")
             ax.grid(True, alpha=0.3)
 
-            # Set y-axis range to start from 0
             if metric_name != "R2":  # R2 score can be negative, so don't start from 0
                 ymin, ymax = ax.get_ylim()
                 ax.set_ylim(0, ymax * 1.1)  # Leave 10% space to display value labels
@@ -1136,8 +995,18 @@ class DataVisualizer:
 
         plt.tight_layout()
 
-        # Save the chart to the comparison folder
         filename = "performance_metrics.png"
         folder = self.subdirs["comparison"]
         save_figure(os.path.join(folder, filename), dpi=300, bbox_inches="tight")
         plt.close()
+
+    def plot_weather_box_by_condition(self, weather_data, save_dir):
+        if "condition" in weather_data.columns and "TMAX" in weather_data.columns:
+            plt.figure(figsize=(12, 6))
+            sns.boxplot(x="condition", y="TMAX", data=weather_data)
+            plt.title("Max Temperature by Weather Condition")
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            os.makedirs(save_dir, exist_ok=True)
+            plt.savefig(os.path.join(save_dir, "weather_condition_temp_box.png"), dpi=300)
+            plt.close()

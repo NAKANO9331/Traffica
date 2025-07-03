@@ -8,7 +8,7 @@ Traffica is a deep learning-based traffic flow forecasting system that integrate
 
 - **Multi-model Support**: LSTM, GRU, TCN (both baseline and weather-enhanced variants) for comparative analysis.
 - **Weather Data Integration**: Incorporates temperature, precipitation, wind speed, humidity, and more.
-- **GPU-Accelerated Training**: Optimized for NVIDIA RTX GPUs (CUDA 12.x).
+- **GPU-Accelerated Training**: Optimized for NVIDIA RTX GPU.
 - **Automated Experiments**: Baseline vs. enhanced models, with full experiment logging.
 - **Rich Visualization**: Data analysis, model performance, training process, and interactive map visualizations.
 - **Reproducibility**: All experiments and results are logged for reproducibility.
@@ -22,12 +22,9 @@ Traffica is a deep learning-based traffic flow forecasting system that integrate
      `conda env create -f environment.yml && conda activate traffica`
    - Or pip:  
      `pip install -r requirements.txt`
-2. **Verify GPU (Optional)**
-   - `nvidia-smi`
-   - `python -c "import tensorflow as tf; print('GPU Available:', tf.config.list_physical_devices('GPU'))"`
-3. **Run Experiments**
+2. **Run Experiments**
    - `python launch.py`
-4. **Interactive Visualization**
+3. **Interactive Visualization**
    - `streamlit run streamlit_map.py`  
      Open http://localhost:8501 in your browser.
 
@@ -38,7 +35,7 @@ Traffica is a deep learning-based traffic flow forecasting system that integrate
 ### Model Performance Overview
 
 ![Model Performance Metrics](results/figures/comparison/performance_metrics.png)
-*Comparison of key metrics (RMSE, MAE, R², MAPE) for baseline and weather-enhanced models.*
+*Comparison of key metrics (RMSE, MAE, R²) for baseline and weather-enhanced models.*
 
 ### Performance Table
 
@@ -87,11 +84,7 @@ Traffica/
 
 - Python 3.8+
 - See `requirements.txt` or `environment.yml` for all dependencies (TensorFlow, PyTorch, scikit-learn, pandas, numpy, matplotlib, seaborn, pydeck, streamlit, etc.)
-- GPU (CUDA 12.x) recommended for training
+- GPU recommended for training
 
----
 
-## License
-
-This project is licensed under the MIT License.
 

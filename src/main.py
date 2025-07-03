@@ -194,6 +194,8 @@ def run_full_experiment():
         traffic_data = load_filled_traffic_data(method=impute_method)
         weather_data = load_weather_data()
         visualizer.plot_weather_analysis(weather_data, visualizer.subdirs["weather"])
+        visualizer.plot_traffic_weather_relationship(traffic_data, weather_data, visualizer.subdirs["traffic"])
+        visualizer.plot_weather_box_by_condition(weather_data, visualizer.subdirs["weather"])
         _, scaler, target_scaler = data_processor.prepare_data(
             traffic_data=traffic_data,
             weather_data=weather_data

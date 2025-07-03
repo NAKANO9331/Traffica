@@ -249,7 +249,6 @@ class BaselineModels:
                         workers=1,  # Reduce the number of workers
                     )
 
-                    # 保存預測結果到h5
                     if 'X_test' in locals() and 'y_test' in locals():
                         y_pred = self.models[model_name].predict(X_test)
                         with h5py.File(f'filled_result_{model_name}.h5', 'w') as hf:
