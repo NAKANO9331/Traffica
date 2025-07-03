@@ -1009,4 +1009,4 @@ class DataVisualizer:
             plt.tight_layout()
             os.makedirs(save_dir, exist_ok=True)
             plt.savefig(os.path.join(save_dir, "weather_condition_temp_box.png"), dpi=300)
-            plt.close()
+        plt.close()

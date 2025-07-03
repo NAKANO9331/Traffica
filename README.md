@@ -6,12 +6,15 @@ Traffica is a deep learning-based traffic flow forecasting system that integrate
 
 ## Features
 
-- **Multi-model Support**: LSTM, GRU, TCN (both baseline and weather-enhanced variants) for comparative analysis.
-- **Weather Data Integration**: Incorporates temperature, precipitation, wind speed, humidity, and more.
-- **GPU-Accelerated Training**: Optimized for NVIDIA RTX GPU.
-- **Automated Experiments**: Baseline vs. enhanced models, with full experiment logging.
-- **Rich Visualization**: Data analysis, model performance, training process, and interactive map visualizations.
-- **Reproducibility**: All experiments and results are logged for reproducibility.
+- **Weather + Traffic Data**: Integrates weather and traffic data for better predictions.
+
+- **Multiple Models**: Supports LSTM, GRU, TCN, and weather-integrated versions.
+
+- **Automatic Experiments**: Runs and logs experiments automatically.
+
+- **Rich Visualization**: Provides static and interactive result plots.
+
+- **Reproducible**: All results and settings are saved for repeatability.
 
 ---
 
