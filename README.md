@@ -92,6 +92,8 @@ Traffica/
 
 We would like to thank the authors and contributors of the models and datasets utilized in this project. Their work has been fundamental to the development and success of Traffica.
 
+---
+
 ## Contact
 
 For questions, suggestions, or collaboration opportunities, please contact us via:
