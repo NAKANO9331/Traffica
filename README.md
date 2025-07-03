@@ -1,4 +1,4 @@
-# Traffica: Traffic Flow Forecasting System Enhanced by Weather Data
+# Traffica: Traffic Flow Forecasting System that Integrates Weather Data
 
 Traffica is a deep learning-based traffic flow forecasting system that integrates weather data to significantly improve prediction accuracy. The system supports multiple deep learning models, provides a comprehensive experimental framework, and offers rich visualization and reproducible research support.
 
