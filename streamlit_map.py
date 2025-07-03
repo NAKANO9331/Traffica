@@ -70,19 +70,26 @@ def plot_func(df_day, angle=0, mode="SUM"):
     medium_grid = grid_df[(grid_df.level == "medium") | (grid_df.level == "heavy")]
     heavy_grid = grid_df[(grid_df.level == "medium") | (grid_df.level == "heavy")]
     # Color scale
-    COLOR_BREWER_LIGHT_GREEN_SCALE = [
-        [247, 252, 245],
-        [199, 233, 192],
-        [161, 217, 155],
-        [116, 196, 118],
+    COLOR_TECH_CYAN = [0, 255, 255]
+    COLOR_TECH_BLUE = [102, 153, 255]
+    COLOR_TECH_PURPLE = [204, 102, 255]
+    COLOR_TECH_TEXT = [220, 220, 220, 255]
+    COLOR_TECH_CYAN_SCALE = [
+        [0, 255, 255],
+        [51, 204, 255],
+        [102, 255, 255],
+        [153, 255, 255],
     ]
-    COLOR_BREWER_LIGHT_YELLOW_SCALE = [
-        [255, 255, 229],
-        [255, 247, 188],
-        [254, 227, 145],
-        [254, 217, 118],
-        [254, 178, 76],
-        [253, 141, 60],
+    COLOR_TECH_BLUE_SCALE = [
+        [102, 153, 255],
+        [51, 102, 204],
+        [153, 204, 255],
+        [102, 204, 255],
+    ]
+    COLOR_TECH_PURPLE_SCALE = [
+        [204, 102, 255],
+        [153, 51, 204],
+        [229, 204, 255],
     ]
     # TextLayer
     text_layer = pdk.Layer(
@@ -91,7 +98,7 @@ def plot_func(df_day, angle=0, mode="SUM"):
         get_position='position',
         get_text='text',
         get_size=20,
-        get_color=[161, 217, 155, 255],
+        get_color=COLOR_TECH_TEXT,
         get_angle=0,
         get_text_anchor="'middle'",
         get_alignment_baseline="'top'"
@@ -103,7 +110,7 @@ def plot_func(df_day, angle=0, mode="SUM"):
         opacity=1,
         get_position=["longitude", "latitude"],
         aggregation=pdk.types.String(mode),
-        color_range=COLOR_BREWER_LIGHT_GREEN_SCALE,
+        color_range=COLOR_TECH_CYAN_SCALE,
         threshold=1,
         get_weight="inverse_normalized",
         pickable=True,
@@ -114,7 +121,7 @@ def plot_func(df_day, angle=0, mode="SUM"):
         opacity=1,
         get_position=["longitude", "latitude"],
         aggregation=pdk.types.String(mode),
-        color_range=COLOR_BREWER_LIGHT_YELLOW_SCALE,
+        color_range=COLOR_TECH_BLUE_SCALE,
         threshold=1,
         get_weight="inverse_normalized",
         pickable=True,
@@ -126,7 +133,7 @@ def plot_func(df_day, angle=0, mode="SUM"):
         get_position=["longitude", "latitude"],
         threshold=1,
         aggregation=pdk.types.String(mode),
-        color_range=[[255, 0, 0]],
+        color_range=COLOR_TECH_PURPLE_SCALE,
         get_weight="radius",
         pickable=True,
     )
@@ -145,8 +152,8 @@ def plot_func(df_day, angle=0, mode="SUM"):
         get_position=["longitude", "latitude"],
         get_radius="radius",
         billboard = False,
-        get_fill_color=[199, 233, 192],
-        get_line_color=[199, 233, 192],
+        get_fill_color=COLOR_TECH_CYAN,
+        get_line_color=COLOR_TECH_CYAN,
     )
     medium_scatter = pdk.Layer(
         "ScatterplotLayer",
@@ -162,8 +169,8 @@ def plot_func(df_day, angle=0, mode="SUM"):
         get_position=["longitude", "latitude"],
         get_radius="radius",
         billboard = False,
-        get_fill_color=[254, 217, 118],
-        get_line_color=[254, 217, 118],
+        get_fill_color=COLOR_TECH_BLUE,
+        get_line_color=COLOR_TECH_BLUE,
     )
     heavy_scatter = pdk.Layer(
         "ScatterplotLayer",
@@ -179,8 +186,8 @@ def plot_func(df_day, angle=0, mode="SUM"):
         billboard = False,
         get_position=["longitude", "latitude"],
         get_radius="radius",
-        get_fill_color=[255, 0, 0],
-        get_line_color=[255, 0, 0],
+        get_fill_color=COLOR_TECH_PURPLE,
+        get_line_color=COLOR_TECH_PURPLE,
     )
     # Bar GridLayer
     medium_grid_layer = pdk.Layer(
@@ -192,7 +199,7 @@ def plot_func(df_day, angle=0, mode="SUM"):
         elevation_scale=4,
         elevationAggregation="MAX",
         get_position=["longitude", "latitude"],
-        color_range=[[254, 217, 118]],
+        color_range=[COLOR_TECH_BLUE],
     )
     heavy_grid_layer = pdk.Layer(
         "GridLayer",
@@ -203,6 +210,7 @@ def plot_func(df_day, angle=0, mode="SUM"):
         elevation_scale=4,
         elevationAggregation="MAX",
         get_position=["longitude", "latitude"],
+        color_range=[COLOR_TECH_PURPLE],
     )
     # View state
     view_state = pdk.ViewState(
