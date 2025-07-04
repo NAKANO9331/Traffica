@@ -89,7 +89,7 @@ Traffica/
 ## Requirements
 
 - Python 3.8+
-- See `requirements.txt` or `environment.yml` for all dependencies (TensorFlow, PyTorch, scikit-learn, pandas, numpy, matplotlib, seaborn, pydeck, streamlit, etc.)
+- See `requirements.txt` or `environment.yml` for all dependencies (TensorFlow, PyTorch, scikit-learn, pandas, numpy,etc.)
 - GPU recommended for training
 
 ---
